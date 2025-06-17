@@ -1,36 +1,469 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="si">
 <head>
-<title>CHAMA MD WEB NEW</title>
-<meta charset=UTF-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<style>:root{--bg-dark:#000428;--bg-light:#ffffff;--text-dark:#ffffff;--text-light:#000000;--highlight:#ffdd57;--danger:#ff3860}body{background:var(--bg-dark);color:var(--text-dark);font-family:sans-serif;padding:30px;text-align:center;transition:all .3s ease}body.light{background:var(--bg-light);color:var(--text-light)}input,textarea{width:80%;padding:10px;margin:10px 0;border-radius:10px;border:none;outline:0;font-size:16px}button{background:linear-gradient(to right,#9b00ff,#ff0076);color:#fff;padding:12px 24px;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:16px;margin:5px}.comment{background-color:rgba(255,255,255,.1);padding:15px;border-radius:12px;margin:10px auto;max-width:600px;text-align:left;box-shadow:0 0 10px rgba(255,255,255,.2);position:relative}.comment strong{color:var(--highlight);font-size:18px}.comment small{color:#ccc;font-size:12px}#comments{margin-top:30px}.reply{margin-top:10px;padding-left:20px;font-size:14px;color:#f1f1f1;border-left:2px solid var(--highlight)}.reply small{font-size:11px;color:#ccc}.theme-toggle{position:absolute;top:10px;right:10px;cursor:pointer}.actions{display:flex;align-items:center;margin-top:10px}.reply-btn{background:0 0;border:1px solid var(--highlight);padding:5px 10px;font-size:12px;color:var(--highlight)}.delete-btn{background:0 0;border:1px solid var(--danger);padding:5px 10px;font-size:12px;color:var(--danger);margin-left:10px}.reactions{display:flex;margin-left:10px}.reaction{background:rgba(255,255,255,.1);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;margin-right:5px;cursor:pointer;transition:all .2s;position:relative}.reaction:hover{transform:scale(1.2)}.reaction.active{background:var(--highlight);color:#000}.reaction-count{font-size:10px;margin-left:3px}.reply-form{margin-top:10px;display:none}.reply-form.active{display:block}.user-reacted{position:absolute;bottom:-5px;right:-5px;font-size:8px;background:var(--highlight);color:#000;border-radius:50%;width:12px;height:12px;display:flex;align-items:center;justify-content:center}.comment-image{max-width:100%;max-height:300px;border-radius:8px;margin-top:10px;cursor:pointer;transition:transform .3s}.comment-image:hover{transform:scale(1.02)}.image-preview{max-width:100px;max-height:100px;margin-right:10px;border-radius:5px;display:none}.file-upload{display:flex;align-items:center;margin:10px 0}.file-upload-label{background:rgba(255,255,255,.1);padding:8px 15px;border-radius:8px;cursor:pointer;display:inline-block}#image-upload{display:none}.modal{display:none;position:fixed;z-index:100;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,.9);align-items:center;justify-content:center}.modal-image{max-width:90%;max-height:90%}.close-modal{position:absolute;top:20px;right:30px;color:#fff;font-size:30px;cursor:pointer}.password-modal{display:none;position:fixed;z-index:100;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,.7);align-items:center;justify-content:center}.password-modal-content{background:var(--bg-dark);padding:20px;border-radius:10px;width:300px;text-align:center}.password-modal input{width:100%;margin:10px 0}.password-modal button{width:100%}.error-message{color:var(--danger);font-size:14px;margin-top:5px;display:none}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>සිංහල DJ රිමික්ස්</title>
+    <style>
+        :root {
+            --deck-a: #FF5722;
+            --deck-b: #4CAF50;
+            --mixer: #607D8B;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+            touch-action: manipulation;
+        }
+        
+        .app-container {
+            max-width: 100%;
+            padding: 10px;
+        }
+        
+        .decks {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .deck {
+            flex: 1;
+            background: #1E1E1E;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .deck-a { border-top: 5px solid var(--deck-a); }
+        .deck-b { border-top: 5px solid var(--deck-b); }
+        
+        .track-info {
+            margin-bottom: 10px;
+        }
+        
+        .track-name {
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            background: #333;
+            padding: 8px;
+            border-radius: 8px;
+        }
+        
+        .time-bpm {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #AAA;
+            margin-top: 5px;
+        }
+        
+        .waveform {
+            height: 80px;
+            background: #252525;
+            border-radius: 8px;
+            margin: 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vinyl {
+            width: 70px;
+            height: 70px;
+            background: #222;
+            border-radius: 50%;
+            margin: 0 auto;
+            background-image: radial-gradient(circle, #444 10%, #222 60%, #111 90%);
+            border: 2px solid #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .vinyl::before {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .vinyl-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .deck-controls {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .btn-play {
+            background: var(--deck-a);
+            color: black;
+            grid-column: span 2;
+            font-weight: bold;
+        }
+        
+        .deck-b .btn-play {
+            background: var(--deck-b);
+        }
+        
+        .btn-cue {
+            background: #555;
+        }
+        
+        .btn-sync {
+            background: #2196F3;
+        }
+        
+        .btn-fx {
+            background: #9C27B0;
+        }
+        
+        .mixer {
+            background: #1E1E1E;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .crossfader {
+            width: 100%;
+            height: 30px;
+            margin: 15px 0;
+        }
+        
+        .crossfader input[type="range"] {
+            width: 100%;
+            height: 10px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, var(--deck-a), #666, var(--deck-b));
+            border-radius: 5px;
+        }
+        
+        .eq-controls {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        
+        .eq-knob {
+            text-align: center;
+        }
+        
+        .eq-knob label {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .knob {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .spinning {
+            animation: spin 2s linear infinite;
+        }
+    </style>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
 </head>
 <body>
-<button class=theme-toggle onclick=toggleTheme()>🌓</button>
-<h2>💬 Leave a Comment</h2>
-<input id=name placeholder="Your Name"><br>
-<textarea id=comment placeholder="Your Comment 😊"></textarea><br>
-<div class=file-upload>
-<label for=image-upload class=file-upload-label>📷</label>
-<input type=file id=image-upload accept=image/*>
-<img id=image-preview class=image-preview>
-</div>
-<button onclick=submitComment()>Post Comment</button>
-<div id=comments></div>
-<div class=modal id=image-modal>
-<span class=close-modal onclick=closeModal()>&times;</span>
-<img class=modal-image id=modal-image>
-</div>
-<div class=password-modal id=password-modal>
-<div class=password-modal-content>
-<h3>Enter Password</h3>
-<input type=password id=delete-password placeholder=Password>
-<div class=error-message id=password-error>Incorrect password!</div>
-<button onclick=confirmDelete()>Confirm</button>
-<button onclick=closePasswordModal() style=background:#666;margin-top:10px>Cancel</button>
-</div>
-</div>
-<script>let userIP="",selectedImage=null,currentDeleteAction=null;function toggleTheme(){document.body.classList.toggle("light")}function submitComment(){const e=document.getElementById("name").value.trim(),n=document.getElementById("comment").value.trim();if(!e||!n)return alert("Name and comment are required!");const t=new FormData;t.append("name",e),t.append("comment",n),selectedImage&&t.append("image",selectedImage),fetch("/comments",{method:"POST",body:t}).then((e=>{e.ok&&(document.getElementById("name").value="",document.getElementById("comment").value="",document.getElementById("image-upload").value="",document.getElementById("image-preview").style.display="none",selectedImage=null,loadComments())}))}function loadComments(){fetch("/comments").then((e=>e.json())).then((e=>{document.getElementById("comments").innerHTML=e.map((e=>`\n            <div class="comment" data-id="${e._id}">\n              <strong>${e.name}</strong><br/>\n              <span>${e.comment}</span><br/>\n              ${e.imageUrl?`<img src="${e.imageUrl}" class="comment-image" onclick="openModal('${e.imageUrl}')"/>`:""}\n              <small>${new Date(e.date).toLocaleString()}</small>\n              \n              <div class="actions">\n                <button class="reply-btn" onclick="toggleReplyForm('${e._id}')">Reply</button>\n                <button class="delete-btn" onclick="showPasswordModal('comment', '${e._id}')">Delete</button>\n                <div class="reactions">\n                  <div class="reaction ${e.reactions?.likeUsers?.includes(userIP)?"active":""}" \n                       onclick="addReaction('${e._id}', null, 'like')">\n                    👍<span class="reaction-count">${e.reactions?.like||0}</span>\n                    ${e.reactions?.likeUsers?.includes(userIP)?'<span class="user-reacted">✓</span>':""}\n                  </div>\n                  <div class="reaction ${e.reactions?.loveUsers?.includes(userIP)?"active":""}" \n                       onclick="addReaction('${e._id}', null, 'love')">\n                    ❤️<span class="reaction-count">${e.reactions?.love||0}</span>\n                    ${e.reactions?.loveUsers?.includes(userIP)?'<span class="user-reacted">✓</span>':""}\n                  </div>\n                  <div class="reaction ${e.reactions?.laughUsers?.includes(userIP)?"active":""}" \n                       onclick="addReaction('${e._id}', null, 'laugh')">\n                    😂<span class="reaction-count">${e.reactions?.laugh||0}</span>\n                    ${e.reactions?.laughUsers?.includes(userIP)?'<span class="user-reacted">✓</span>':""}\n                  </div>\n                </div>\n              </div>\n              \n              <div class="reply-form" id="reply-form-${e._id}">\n                <input type="text" id="reply-name-${e._id}" placeholder="Your Name"/>\n                <textarea id="reply-comment-${e._id}" placeholder="Your Reply"></textarea>\n                <div class="file-upload">\n                  <label for="reply-image-${e._id}" class="file-upload-label">📷</label>\n                  <input type="file" id="reply-image-${e._id}" class="reply-image-upload" accept="image/*"/>\n                  <img id="reply-image-preview-${e._id}" class="image-preview"/>\n                </div>\n                <button onclick="submitReply('${e._id}')">Post Reply</button>\n              </div>\n              \n              <div id="replies-${e._id}">\n                ${e.replies?.map((n=>`\n                  <div class="reply" data-id="${n._id}" data-parent="${e._id}">\n                    <strong>${n.name}</strong>: ${n.comment}<br/>\n                    ${n.imageUrl?`<img src="${n.imageUrl}" class="comment-image" onclick="openModal('${n.imageUrl}')"/>`:""}\n                    <small>${new Date(n.date).toLocaleString()}</small>\n                    <div class="actions">\n                      <button class="delete-btn" onclick="showPasswordModal('reply', '${e._id}', '${n._id}')">Delete</button>\n                      <div class="reactions">\n                        <div class="reaction ${n.reactions?.likeUsers?.includes(userIP)?"active":""}" \n                             onclick="addReaction('${e._id}', '${n._id}', 'like')">\n                          👍<span class="reaction-count">${n.reactions?.like||0}</span>\n                          ${n.reactions?.likeUsers?.includes(userIP)?'<span class="user-reacted">✓</span>':""}\n                        </div>\n                        <div class="reaction ${n.reactions?.loveUsers?.includes(userIP)?"active":""}" \n                             onclick="addReaction('${e._id}', '${n._id}', 'love')">\n                          ❤️<span class="reaction-count">${n.reactions?.love||0}</span>\n                          ${n.reactions?.loveUsers?.includes(userIP)?'<span class="user-reacted">✓</span>':""}\n                        </div>\n                        <div class="reaction ${n.reactions?.laughUsers?.includes(userIP)?"active":""}" \n                             onclick="addReaction('${e._id}', '${n._id}', 'laugh')">\n                          😂<span class="reaction-count">${n.reactions?.laugh||0}</span>\n                          ${n.reactions?.laughUsers?.includes(userIP)?'<span class="user-reacted">✓</span>':""}\n                        </div>\n                      </div>\n                    </div>\n                  </div>\n                `)).join("")||""}\n              </div>\n            </div>\n          `)).join(""),e.forEach((e=>{const n=`reply-image-${e._id}`,t=`reply-image-preview-${e._id}`;document.getElementById(n)?.addEventListener("change",(function(e){const n=e.target.files[0];if(n){const e=new FileReader;e.onload=function(e){const n=document.getElementById(t);n.src=e.target.result,n.style.display="block"},e.readAsDataURL(n)}}))}))}))}function toggleReplyForm(e){document.getElementById(`reply-form-${e}`).classList.toggle("active")}function submitReply(e){const n=document.getElementById(`reply-name-${e}`).value.trim(),t=document.getElementById(`reply-comment-${e}`).value.trim();if(!n||!t)return alert("Name and reply are required!");const a=document.getElementById(`reply-image-${e}`),s=new FormData;s.append("parentId",e),s.append("name",n),s.append("comment",t),a.files[0]&&s.append("image",a.files[0]),fetch("/comments/reply",{method:"POST",body:s}).then((n=>{n.ok&&(document.getElementById(`reply-name-${e}`).value="",document.getElementById(`reply-comment-${e}`).value="",document.getElementById(`reply-image-${e}`).value="",document.getElementById(`reply-image-preview-${e}`).style.display="none",document.getElementById(`reply-form-${e}`).classList.remove("active"),loadComments())}))}function addReaction(e,n,t){fetch("/comments/react",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({commentId:e,replyId:n,type:t,userIP:userIP})}).then((e=>{e.ok&&loadComments()}))}function openModal(e){const n=document.getElementById("image-modal"),t=document.getElementById("modal-image");n.style.display="flex",t.src=e}function closeModal(){document.getElementById("image-modal").style.display="none"}function showPasswordModal(e,n,t=null){currentDeleteAction={type:e,commentId:n,replyId:t},document.getElementById("password-modal").style.display="flex",document.getElementById("delete-password").value="",document.getElementById("password-error").style.display="none"}function closePasswordModal(){document.getElementById("password-modal").style.display="none",currentDeleteAction=null}function confirmDelete(){const e=document.getElementById("delete-password").value,n=document.getElementById("password-error");if(!currentDeleteAction)return n.textContent="No delete action specified",void(n.style.display="block");const{type:t,commentId:a,replyId:s}=currentDeleteAction;let l;if("comment"===t)l=`/comments/${a}`;else{if("reply"!==t)return n.textContent="Invalid delete type",void(n.style.display="block");l=`/comments/${a}/replies/${s}`}fetch(l,{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:e})}).then((e=>e.ok?e.json():e.json().then((e=>{throw new Error(e.error||"Failed to delete")})))).then((()=>{closePasswordModal(),loadComments()})).catch((e=>{n.textContent=e.message,n.style.display="block"}))}fetch("https://api.ipify.org?format=json").then((e=>e.json())).then((e=>{userIP=e.ip})).catch((()=>{userIP="local-"+Math.random().toString(36).substr(2,9)})),document.getElementById("image-upload").addEventListener("change",(function(e){const n=e.target.files[0];if(n){selectedImage=n;const e=new FileReader;e.onload=function(e){const n=document.getElementById("image-preview");n.src=e.target.result,n.style.display="block"},e.readAsDataURL(n)}})),window.onclick=function(e){const n=document.getElementById("image-modal");e.target==n&&closeModal();const t=document.getElementById("password-modal");e.target==t&&closePasswordModal()},loadComments()</script>
+    <div class="app-container">
+        <div class="decks">
+            <!-- Deck A -->
+            <div class="deck deck-a">
+                <div class="track-info">
+                    <div class="track-name" id="track-name-a">ගීතය තෝරන්න</div>
+                    <div class="time-bpm">
+                        <span id="time-a">00:00 / 00:00</span>
+                        <span>BPM: <span id="bpm-a">0</span></span>
+                    </div>
+                </div>
+                
+                <div id="waveform-a" class="waveform"></div>
+                
+                <div class="vinyl" id="vinyl-a">
+                    <div class="vinyl-img" id="vinyl-img-a"></div>
+                </div>
+                
+                <div class="deck-controls">
+                    <button class="btn btn-cue" onclick="setCue('a')">CUE</button>
+                    <button class="btn" onclick="setHotCue('a', 1)">1</button>
+                    <button class="btn" onclick="setHotCue('a', 2)">2</button>
+                    <button class="btn" onclick="setHotCue('a', 3)">3</button>
+                    <button class="btn btn-play" onclick="playPause('a')">▶️ PLAY</button>
+                    <button class="btn btn-sync" onclick="syncBpm('a')">SYNC</button>
+                    <button class="btn btn-fx" onclick="toggleFx('a')">FX</button>
+                    <button class="btn" onclick="toggleLoop('a')">LOOP</button>
+                </div>
+            </div>
+            
+            <!-- Deck B -->
+            <div class="deck deck-b">
+                <div class="track-info">
+                    <div class="track-name" id="track-name-b">ගීතය තෝරන්න</div>
+                    <div class="time-bpm">
+                        <span id="time-b">00:00 / 00:00</span>
+                        <span>BPM: <span id="bpm-b">0</span></span>
+                    </div>
+                </div>
+                
+                <div id="waveform-b" class="waveform"></div>
+                
+                <div class="vinyl" id="vinyl-b">
+                    <div class="vinyl-img" id="vinyl-img-b"></div>
+                </div>
+                
+                <div class="deck-controls">
+                    <button class="btn btn-cue" onclick="setCue('b')">CUE</button>
+                    <button class="btn" onclick="setHotCue('b', 1)">1</button>
+                    <button class="btn" onclick="setHotCue('b', 2)">2</button>
+                    <button class="btn" onclick="setHotCue('b', 3)">3</button>
+                    <button class="btn btn-play" onclick="playPause('b')">▶️ PLAY</button>
+                    <button class="btn btn-sync" onclick="syncBpm('b')">SYNC</button>
+                    <button class="btn btn-fx" onclick="toggleFx('b')">FX</button>
+                    <button class="btn" onclick="toggleLoop('b')">LOOP</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mixer Section -->
+        <div class="mixer">
+            <div class="crossfader">
+                <input type="range" id="crossfader" min="0" max="100" value="50">
+            </div>
+            
+            <div class="eq-controls">
+                <div class="eq-knob">
+                    <label>GAIN</label>
+                    <div class="knob"></div>
+                </div>
+                <div class="eq-knob">
+                    <label>HIGH</label>
+                    <div class="knob"></div>
+                </div>
+                <div class="eq-knob">
+                    <label>MID</label>
+                    <div class="knob"></div>
+                </div>
+                <div class="eq-knob">
+                    <label>LOW</label>
+                    <div class="knob"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- File Inputs -->
+        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+            <button onclick="loadTrack('a')" style="background: var(--deck-a); padding: 10px 15px; border-radius: 8px; border: none; color: black; font-weight: bold;">ඩෙක් A ගීතය</button>
+            <button onclick="loadTrack('b')" style="background: var(--deck-b); padding: 10px 15px; border-radius: 8px; border: none; color: black; font-weight: bold;">ඩෙක් B ගීතය</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Wavesurfer
+        const wavesurferA = WaveSurfer.create({
+            container: '#waveform-a',
+            waveColor: '#FF5722',
+            progressColor: '#FF9800',
+            cursorColor: '#FF5722',
+            barWidth: 2,
+            barRadius: 3,
+            barGap: 2,
+            height: 80
+        });
+        
+        const wavesurferB = WaveSurfer.create({
+            container: '#waveform-b',
+            waveColor: '#4CAF50',
+            progressColor: '#8BC34A',
+            cursorColor: '#4CAF50',
+            barWidth: 2,
+            barRadius: 3,
+            barGap: 2,
+            height: 80
+        });
+        
+        // App state
+        const state = {
+            a: {
+                wavesurfer: wavesurferA,
+                isPlaying: false,
+                cuePoint: 0,
+                hotCues: {},
+                bpm: 0,
+                fxOn: false
+            },
+            b: {
+                wavesurfer: wavesurferB,
+                isPlaying: false,
+                cuePoint: 0,
+                hotCues: {},
+                bpm: 0,
+                fxOn: false
+            },
+            crossfader: 50
+        };
+        
+        // Load track function
+        function loadTrack(deck) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'audio/*';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    state[deck].wavesurfer.load(url);
+                    document.getElementById(`track-name-${deck}`).textContent = file.name;
+                    document.getElementById(`vinyl-img-${deck}`).style.backgroundImage = `url(https://picsum.photos/200?random=${Date.now()})`;
+                    
+                    // Simulate BPM detection
+                    setTimeout(() => {
+                        const randomBpm = Math.floor(Math.random() * 30) + 120;
+                        state[deck].bpm = randomBpm;
+                        document.getElementById(`bpm-${deck}`).textContent = randomBpm;
+                    }, 1000);
+                }
+            };
+            input.click();
+        }
+        
+        // Play/Pause function
+        function playPause(deck) {
+            if (state[deck].isPlaying) {
+                state[deck].wavesurfer.pause();
+                state[deck].isPlaying = false;
+                document.querySelector(`.deck-${deck} .btn-play`).textContent = '▶️ PLAY';
+                document.getElementById(`vinyl-${deck}`).classList.remove('spinning');
+            } else {
+                state[deck].wavesurfer.play();
+                state[deck].isPlaying = true;
+                document.querySelector(`.deck-${deck} .btn-play`).textContent = '⏸ PAUSE';
+                document.getElementById(`vinyl-${deck}`).classList.add('spinning');
+            }
+        }
+        
+        // Set cue point
+        function setCue(deck) {
+            state[deck].cuePoint = state[deck].wavesurfer.getCurrentTime();
+            alert(`CUE සකසා ඇත: ${formatTime(state[deck].cuePoint)}`);
+        }
+        
+        // Set hot cue
+        function setHotCue(deck, cueNum) {
+            const currentTime = state[deck].wavesurfer.getCurrentTime();
+            
+            if (state[deck].hotCues[cueNum] === currentTime) {
+                // Jump to hot cue
+                state[deck].wavesurfer.setCurrentTime(currentTime);
+            } else {
+                // Set new hot cue
+                state[deck].hotCues[cueNum] = currentTime;
+                alert(`Hot Cue ${cueNum} සකසා ඇත: ${formatTime(currentTime)}`);
+            }
+        }
+        
+        // Sync BPM
+        function syncBpm(deck) {
+            const otherDeck = deck === 'a' ? 'b' : 'a';
+            
+            if (state[otherDeck].bpm > 0) {
+                state[deck].bpm = state[otherDeck].bpm;
+                document.getElementById(`bpm-${deck}`).textContent = state[deck].bpm;
+                alert(`BPM සමමුහුර්ත කරන ලදි: ${state[deck].bpm}`);
+            } else {
+                alert(`පළමුව ${otherDeck.toUpperCase()} ඩෙක් එකේ ගීතයක් ලොඩ් කරන්න`);
+            }
+        }
+        
+        // Toggle FX
+        function toggleFx(deck) {
+            state[deck].fxOn = !state[deck].fxOn;
+            alert(`FX ${state[deck].fxOn ? 'සක්‍රිය' : 'අක්‍රිය'} කරන ලදි`);
+        }
+        
+        // Toggle loop
+        function toggleLoop(deck) {
+            alert(`LOOP ${state[deck].wavesurfer.getCurrentTime()} වෙත සකසා ඇත`);
+        }
+        
+        // Format time
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+        
+        // Update time displays
+        wavesurferA.on('audioprocess', () => {
+            const currentTime = wavesurferA.getCurrentTime();
+            const duration = wavesurferA.getDuration();
+            document.getElementById('time-a').textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+        });
+        
+        wavesurferB.on('audioprocess', () => {
+            const currentTime = wavesurferB.getCurrentTime();
+            const duration = wavesurferB.getDuration();
+            document.getElementById('time-b').textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+        });
+        
+        // Crossfader control
+        document.getElementById('crossfader').addEventListener('input', function() {
+            const value = parseInt(this.value);
+            state.crossfader = value;
+            
+            const deckAVolume = value <= 50 ? 1 : 1 - (value - 50) / 50;
+            const deckBVolume = value >= 50 ? 1 : value / 50;
+            
+            wavesurferA.setVolume(deckAVolume);
+            wavesurferB.setVolume(deckBVolume);
+        });
+        
+        // Initialize vinyl images
+        document.getElementById('vinyl-img-a').style.backgroundImage = 'url(https://picsum.photos/200?random=1)';
+        document.getElementById('vinyl-img-b').style.backgroundImage = 'url(https://picsum.photos/200?random=2)';
+    </script>
 </body>
 </html>
+
+ඔක ට තව දෙවල් දාලා😭😭😭 සම්පුර්ණ කොඩ් එකම ඔන 
