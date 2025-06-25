@@ -1,198 +1,570 @@
-<!DOCTYPE html>
-<html lang="si">
+<!doctype html>
+<html lang=si>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>සුභ උපන්දිනයක්!</title>
-    <style>
-        body {
-            font-family: 'Noto Sans Sinhala', Arial, sans-serif;
-            background: linear-gradient(135deg, #ffc0cb, #ff69b4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .birthday-card {
-            width: 350px;
-            height: 500px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 1.5s;
-            perspective: 1000px;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .card-inner {
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 1.5s;
-        }
-
-        .birthday-card:hover .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-            box-sizing: border-box;
-        }
-
-        .card-front {
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            color: white;
-        }
-
-        .card-back {
-            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
-            color: white;
-            transform: rotateY(180deg);
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
-
-        .cake {
-            font-size: 5rem;
-            margin: 20px 0;
-            animation: bounce 2s infinite;
-        }
-
-        .btn {
-            margin-top: 30px;
-            padding: 12px 30px;
-            background: white;
-            border: none;
-            border-radius: 50px;
-            font-weight: bold;
-            color: #ff1493;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #f00;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-    </style>
+<meta charset=UTF-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>සුභ උපන් දිනයක්!</title>
+<script src=https://cdn.tailwindcss.com></script>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css>
+<link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css>
+<style>@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700&family=Poppins:wght@400;600;700&display=swap);:root{--primary:#ff1493;--secondary:#c71585;--accent:#ff69b4}body{font-family:'Noto Sans Sinhala',Poppins,sans-serif;background:linear-gradient(135deg,#ffc0cb,#ff69b4,#ff1493);background-size:300% 300%;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow-x:hidden;animation:gradientBG 15s ease infinite;position:relative}.stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden}.star{position:absolute;background-color:#fff;border-radius:50%;animation:twinkle var(--duration) infinite ease-in-out;opacity:0}@keyframes gradientBG{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}@keyframes twinkle{0%,100%{opacity:0}50%{opacity:var(--opacity)}}section{display:none;max-width:800px;width:90%;margin:0 auto}#welcomeSection{text-align:center}.gift-box{width:220px;height:220px;background:linear-gradient(135deg,var(--accent),var(--primary));border-radius:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin:0 auto;box-shadow:0 15px 35px rgba(255,20,147,.5);transition:all .4s cubic-bezier(.68, -.55, .265, 1.55);position:relative;overflow:hidden;perspective:1000px}.gift-box:hover{transform:scale(1.08) rotate(5deg);box-shadow:0 20px 45px rgba(255,20,147,.7)}.gift-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(to bottom right,transparent 0,rgba(255,255,255,.1) 45%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.1) 55%,transparent 100%);transform:rotate(30deg);animation:giftShine 3s infinite}.gift-lid{position:absolute;width:100%;height:30%;background:linear-gradient(135deg,#ff69b4,#ff1493);top:0;left:0;transform-origin:bottom center;transition:transform 1s ease;border-radius:15px 15px 0 0;z-index:2;box-shadow:0 -5px 20px rgba(0,0,0,.2)}.gift-body{width:90%;height:70%;background:linear-gradient(135deg,#ff1493,#c71585);border-radius:0 0 15px 15px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}.gift-content{position:absolute;width:80%;height:80%;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;transform:translateY(100%);transition:transform 1s ease}.gift-content i{font-size:3rem;color:var(--accent);animation:pulse 2s infinite}@keyframes giftShine{0%{transform:translateX(-100%) rotate(30deg)}100%{transform:translateX(100%) rotate(30deg)}}#nameInputSection{background:#fff;padding:2.5rem;border-radius:1.5rem;box-shadow:0 20px 40px rgba(0,0,0,.15);text-align:center}#messageSection{background:rgba(255,255,255,.92);padding:2.5rem;border-radius:1.5rem;backdrop-filter:blur(12px);box-shadow:0 20px 40px rgba(0,0,0,.15);text-align:center}.message-card{background:#fff;border-radius:15px;padding:2rem;box-shadow:0 10px 30px rgba(0,0,0,.1);margin-bottom:2rem;transform-style:preserve-3d;transition:transform .8s;min-height:250px;display:flex;flex-direction:column;justify-content:center}.gallery-container{position:relative;width:100%;max-width:800px;height:500px;margin:2rem auto;overflow:hidden;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.3)}.gallery-slide{position:absolute;width:100%;height:100%;opacity:0;transition:opacity 1s ease-in-out;display:flex;align-items:center;justify-content:center;background:#000}.gallery-slide.active{opacity:1}.gallery-slide img{width:100%;height:100%;object-fit:cover;transition:transform 1.5s cubic-bezier(.16, .84, .44, 1)}.gallery-slide.active img{transform:scale(1.05)}.gallery-loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:20;display:none}.gallery-loading.active{display:block}.loading-spinner{width:60px;height:60px;border:5px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin 1s ease-in-out infinite}@keyframes spin{to{transform:rotate(360deg)}}.gallery-indicators{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:10}.gallery-indicator{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:all .3s ease}.gallery-indicator.active{background:#fff;transform:scale(1.2)}.btn{transition:all .5s cubic-bezier(.68, -.55, .265, 1.55);transform:translateY(0);position:relative;overflow:hidden;border:none;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.15);border-radius:12px;padding:1rem 2rem;font-size:1.1rem;cursor:pointer}.btn:hover{transform:translateY(-7px);box-shadow:0 12px 30px rgba(0,0,0,.25)}.btn:active{transform:translateY(3px);box-shadow:0 4px 15px rgba(0,0,0,.2)}.btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:.8s}.btn:hover::before{left:100%}.btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff}.btn-secondary{background:linear-gradient(135deg,#3b82f6,#1d4ed8);color:#fff}.btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff}.btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}.fab{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:fixed;bottom:40px;box-shadow:0 8px 25px rgba(0,0,0,.25);cursor:pointer;transition:all .5s cubic-bezier(.68, -.55, .265, 1.55);z-index:100;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff}.fab:hover{transform:scale(1.15) translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.3)}.input-field{width:100%;padding:1.2rem;border:2px solid #ffb6c1;border-radius:12px;font-size:1.1rem;transition:all .4s cubic-bezier(.68, -.55, .265, 1.55);background:rgba(255,255,255,.9)}.input-field:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 4px rgba(255,20,147,.2);transform:translateY(-3px)}.animate-float{animation:float 6s ease-in-out infinite}@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-25px) rotate(5deg)}}.animate-pulse{animation:pulse 2.5s infinite}@keyframes pulse{0%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.9}100%{transform:scale(1);opacity:1}}.animate-bounce{animation:bounce 2.5s infinite}@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}.animate-fade-in{animation:fadeIn 1.2s cubic-bezier(.68,-.55,.265,1.55)}@keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}.animate-slide-in{animation:slideIn 1s cubic-bezier(.68,-.55,.265,1.55)}@keyframes slideIn{from{opacity:0;transform:translateX(-80px)}to{opacity:1;transform:translateX(0)}}.emoji-rain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}.emoji{position:absolute;font-size:24px;animation:falling linear infinite;will-change:transform}@keyframes falling{0%{transform:translateY(-50px) rotate(0);opacity:1}100%{transform:translateY(calc(100vh + 50px)) rotate(360deg);opacity:0}}.volume-control{position:fixed;bottom:120px;right:40px;background:rgba(255,255,255,.9);padding:15px;border-radius:50px;box-shadow:0 5px 15px rgba(0,0,0,.1);transform:translateY(20px);opacity:0;transition:all .3s ease;z-index:99;display:flex;align-items:center;gap:10px}.volume-control.show{transform:translateY(0);opacity:1}#loadingScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#ffc0cb,#ff69b4,#ff1493);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .8s ease}.loading-spinner-big{width:80px;height:80px;border:8px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin 1.5s ease-in-out infinite;margin-bottom:20px}.loading-text{color:#fff;font-size:1.5rem;font-weight:700;margin-top:20px;text-align:center}.loading-progress{width:200px;height:8px;background:rgba(255,255,255,.3);border-radius:4px;margin-top:20px;overflow:hidden}.loading-progress-bar{height:100%;width:0%;background:#fff;border-radius:4px;transition:width .3s ease}footer{position:fixed;bottom:0;left:0;width:100%;padding:15px 0;text-align:center;background:rgba(255,255,255,.2);backdrop-filter:blur(10px);color:#fff;font-size:14px;z-index:90;box-shadow:0 -5px 15px rgba(0,0,0,.1);animation:fadeInUp 1s ease}footer span{display:inline-block;margin:0 5px;animation:pulse 2s infinite}@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.heart-beat{animation:heartBeat 1.5s infinite}@keyframes heartBeat{0%{transform:scale(1)}14%{transform:scale(1.3)}28%{transform:scale(1)}42%{transform:scale(1.3)}70%{transform:scale(1)}}.gift-open .gift-lid{transform:rotateX(180deg)}.gift-open .gift-content{transform:translateY(0)}@media (max-width:768px){.gallery-container{height:350px}.fab{width:60px;height:60px;bottom:30px}#musicBtn{right:30px}#emojiBtn{left:30px}.message-card{min-height:200px;padding:1.5rem}h1{font-size:2.5rem!important}.gift-box{width:180px;height:180px}}@media (max-width:480px){.gallery-container{height:250px}.gallery-slide img{object-fit:contain}.gallery-indicators{bottom:10px}.gallery-indicator{width:8px;height:8px}}</style>
 </head>
 <body>
-    <div class="birthday-card">
-        <div class="card-inner">
-            <div class="card-front">
-                <div class="cake">🎂</div>
-                <h1>සුභ උපන්දිනයක්!</h1>
-                <p>තෑග්ග විවෘත කරන්න</p>
-            </div>
-            <div class="card-back">
-                <h1>ආදරණිය!</h1>
-                <p>ඔබේ ජීවිතයේ සෑම මොහොතක්ම සතුටින් පිරේවා! ඔබේ සිනහවෙන් ලෝකය ආලෝකමත් වේවා!</p>
-                <button class="btn" id="confettiBtn">කොන්ෆෙටි පිපිරවන්න!</button>
-            </div>
-        </div>
-    </div>
+<div class=stars id=stars></div>
+<div id=loadingScreen>
+<div class=loading-spinner-big></div>
+<div class=loading-text>සකස් වෙමින් පවතී...</div>
+<div class=loading-progress>
+<div class=loading-progress-bar id=progressBar></div>
+</div>
+</div>
+<div id=confettiContainer></div>
+<div id=emojiRainContainer></div>
+<div id=emojiBtn class=fab style=left:40px>
+<i class="fas fa-cloud-rain text-2xl"></i>
+</div>
+<div id=musicBtn class=fab style=right:40px>
+<i class="fas fa-music text-2xl"></i>
+</div>
+<div class=volume-control>
+<i class="fas fa-volume-down text-pink-600"></i>
+<input type=range id=volumeSlider min=0 max=1 step=0.1 value=0.3>
+<i class="fas fa-volume-up text-pink-600"></i>
+</div>
+<section id=welcomeSection class="animate__animated animate__fadeIn">
+<div class=animate-slide-in>
+<h1 class="text-5xl font-bold text-white mb-8 animate-pulse">සුභ උපන් දිනයක්!</h1>
+<p class="text-white text-2xl mb-10">මෙම විශේෂ තෑග්ග විවෘත කිරීමට පහත බොත්තම ක්ලික් කරන්න</p>
+<button id=startBtn class="btn btn-primary px-10 py-5 text-xl animate-float">
+<i class="fas fa-gift mr-3"></i> ආරම්භ කරන්න
+</button>
+</div>
+</section>
+<section id=giftSection>
+<div class="text-center animate-fade-in">
+<div id=giftBox class="gift-box animate-bounce">
+<div class=gift-lid></div>
+<div class=gift-body>
+<div class=gift-content>
+<i class="fas fa-heart heart-beat"></i>
+</div>
+<i class="fas fa-gift text-7xl text-white"></i>
+</div>
+</div>
+<p class="text-white mt-8 text-2xl">තෑග්ග ක්ලික් කර විවෘත කරන්න!</p>
+</div>
+</section>
+<section id=nameInputSection>
+<div class=animate-slide-in>
+<h2 class="text-3xl font-bold text-pink-700 mb-8">ඔබේ ලස්සන නම කුමක්ද?</h2>
+<input id=userName placeholder="මෙතන ටයිප් කරන්න" class="input-field mb-8">
+<button id=submitNameBtn class="btn btn-primary w-full py-5 text-xl">
+<i class="fas fa-arrow-right mr-3"></i> ඉදිරියට යන්න
+</button>
+</div>
+</section>
+<section id=messageSection>
+<div class=animate-fade-in>
+<h1 id=greeting class="text-4xl font-bold text-pink-700 mb-8"></h1>
+<div class=message-card>
+<p id=message class="text-xl text-gray-700 leading-relaxed"></p>
+</div>
+<button id=nextMessageBtn class="btn btn-secondary px-10 py-4 text-xl">
+<i class="fas fa-forward mr-3"></i> ඊළඟ පණිවිඩය
+</button>
+<button id=showGalleryBtn class="btn btn-success px-10 py-4 text-xl mt-6 hidden">
+<i class="fas fa-images mr-3"></i> ඡායාරූප බලන්න
+</button>
+</div>
+</section>
+<section id=gallerySection class="bg-white p-8 rounded-2xl shadow-2xl">
+<div class=animate-slide-in>
+<h1 class="text-4xl font-bold text-pink-700 mb-10 text-center">ඔබේ මතකයන්</h1>
+<div class=gallery-container>
+<div class=gallery-loading>
+<div class=loading-spinner></div>
+</div>
+</div>
+<div class=gallery-indicators></div>
+<div class="text-center mt-10">
+<button id=backToMessageBtn class="btn btn-secondary px-10 py-4 text-xl">
+<i class="fas fa-arrow-left mr-3"></i> පණිවිඩයට ආපසු යන්න
+</button>
+</div>
+</div>
+</section>
+<footer class="animate__animated animate__fadeInUp">
+© POWERED BY  <span class=heart-beat>❤️</span> for <span>🅲🅷🅰🅼🅼🅸🅽🅳🆄</span>
+</footer>
+<audio id=backgroundMusic loop>
+<source src=https://files.catbox.moe/azng1e.mp3 type=audio/mpeg>
+</audio>
+<script>
+function createStars() {
+    const starsContainer = document.getElementById("stars");
+    for (let i = 0; i < 200; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        const size = 3 * Math.random();
+        const left = 100 * Math.random();
+        const top = 100 * Math.random();
+        const duration = 3 + 10 * Math.random();
+        const delay = 5 * Math.random();
+        const opacity = 0.2 + 0.8 * Math.random();
+        
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${left}%`;
+        star.style.top = `${top}%`;
+        star.style.setProperty("--duration", `${duration}s`);
+        star.style.setProperty("--opacity", opacity);
+        star.style.animationDelay = `${delay}s`;
+        starsContainer.appendChild(star);
+    }
+}
 
-    <script>
-        // Confetti effect
-        document.getElementById('confettiBtn').addEventListener('click', function() {
-            createConfetti();
-        });
+// Loading screen with progress bar
+const loadingScreen = document.getElementById("loadingScreen");
+const progressBar = document.getElementById("progressBar");
+let progress = 0;
 
-        function createConfetti() {
-            const colors = ['#ff0000', '#ff1493', '#00ff00', '#ffff00', '#00ffff', '#ff00ff'];
-            
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.classList.add('confetti');
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                
-                const size = Math.random() * 10 + 5;
-                const posX = Math.random() * window.innerWidth;
-                const duration = Math.random() * 3 + 2;
-                
-                confetti.style.width = `${size}px`;
-                confetti.style.height = `${size}px`;
-                confetti.style.left = `${posX}px`;
-                confetti.style.top = `-10px`;
-                
-                document.body.appendChild(confetti);
-                
-                confetti.animate([
-                    { top: '-10px', transform: 'rotate(0deg)' },
-                    { top: `${window.innerHeight}px`, transform: 'rotate(360deg)' }
-                ], {
-                    duration: duration * 1000,
-                    easing: 'cubic-bezier(0.1, 0.8, 0.9, 1)'
-                });
-                
-                setTimeout(() => {
-                    confetti.remove();
-                }, duration * 1000);
-            }
-        }
-
-        // Typewriter effect for front card
-        const text = "සුභ උපන්දිනයක්!";
-        let i = 0;
-        const speed = 150;
-        const h1Element = document.querySelector('.card-front h1');
-
-        function typeWriter() {
-            if (i < text.length) {
-                h1Element.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            }
-        }
-
-        // Start typewriter effect after 1 second
+const loadingInterval = setInterval(() => {
+    progress += 10 * Math.random();
+    if (progress > 100) progress = 100;
+    progressBar.style.width = `${progress}%`;
+    
+    if (progress >= 100) {
+        clearInterval(loadingInterval);
         setTimeout(() => {
-            h1Element.innerHTML = '';
-            typeWriter();
-        }, 1000);
-    </script>
+            loadingScreen.style.opacity = "0";
+            setTimeout(() => {
+                loadingScreen.style.display = "none";
+                init();
+            }, 800);
+        }, 500);
+    }
+}, 300);
+
+// Initialize all sections
+const welcomeSection = document.getElementById("welcomeSection");
+const giftSection = document.getElementById("giftSection");
+const nameInputSection = document.getElementById("nameInputSection");
+const messageSection = document.getElementById("messageSection");
+const gallerySection = document.getElementById("gallerySection");
+const musicBtn = document.getElementById("musicBtn");
+const emojiBtn = document.getElementById("emojiBtn");
+const volumeControl = document.querySelector(".volume-control");
+const volumeSlider = document.getElementById("volumeSlider");
+const startBtn = document.getElementById("startBtn");
+const giftBox = document.getElementById("giftBox");
+const giftLid = document.querySelector(".gift-lid");
+const giftContent = document.querySelector(".gift-content");
+const submitNameBtn = document.getElementById("submitNameBtn");
+const nextMessageBtn = document.getElementById("nextMessageBtn");
+const showGalleryBtn = document.getElementById("showGalleryBtn");
+const backToMessageBtn = document.getElementById("backToMessageBtn");
+const greeting = document.getElementById("greeting");
+const message = document.getElementById("message");
+const userNameInput = document.getElementById("userName");
+const backgroundMusic = document.getElementById("backgroundMusic");
+const confettiContainer = document.getElementById("confettiContainer");
+const emojiRainContainer = document.getElementById("emojiRainContainer");
+const galleryContainer = document.querySelector(".gallery-container");
+const loadingSpinner = document.querySelector(".gallery-loading");
+
+// Messages and images
+const messages = [
+    "ඔබේ ජීවිතයේ සෑම මොහොතක්ම ප්‍රීතිමත්, සතුටුදායක හා ආශ්චර්යමත් වේවා!",
+    "ඔබේ සිහිල් හා මිහිරි සිනහවෙන් ලොව ආලෝකමත් වේවා!",
+    "ඔබේ සිහිල් මනස, ගොඩක් ආදරය සහ ලස්සන හැඩය ඔබේ විශේෂ ගුණාංගයි!",
+    "අලංකාර අනාගතයක් ඔබ වෙනුවෙන් බලාපොරොත්තු වෙමි!",
+    "ඔබේ උපන් දිනයෙන් පටන් ගත් මේ නව වසර ඔබට සුභ පතමි!",
+    "ඔබේ ජීවිතයේ සෑම දිනයක්ම සතුටින් පිරී තිබේවා!",
+    "ඔබේ සිනහවෙන් ලොව ආලෝකමත් වේවා!",
+    "ඔබේ සිහිල් සිතිවිලි සහ මිහිරි සිනහව රැකෙන්නේවා!"
+];
+
+const images = [
+    "https://files.catbox.moe/cpu3eu.jpg",
+    "https://files.catbox.moe/5dar3f.jpg",
+    "https://files.catbox.moe/nparpu.jpg",
+    "https://files.catbox.moe/ady2vu.jpg"
+];
+
+// Gallery variables
+let autoRotateInterval;
+let currentMessageIndex = 0;
+let userName = "";
+let currentSlideIndex = 0;
+let isAutoRotating = true;
+const rotationSpeed = 3500;
+let isMusicPlaying = false;
+let isEmojiRaining = false;
+
+// Initialize gallery
+function initGallery() {
+    const gallery = document.querySelector(".gallery-container");
+    const indicators = document.querySelector(".gallery-indicators");
+    
+    loadingSpinner.classList.add("active");
+    let loadedImages = 0;
+    
+    images.forEach((imgSrc, index) => {
+        const img = new Image();
+        img.src = imgSrc;
+        img.onload = () => {
+            loadedImages++;
+            if (loadedImages === images.length) {
+                loadingSpinner.classList.remove("active");
+                startAutoRotation();
+            }
+        };
+        
+        const slide = document.createElement("div");
+        slide.className = "gallery-slide";
+        if (index === 0) slide.classList.add("active");
+        
+        const imgElement = document.createElement("img");
+        imgElement.src = imgSrc;
+        imgElement.alt = `Image ${index + 1}`;
+        slide.appendChild(imgElement);
+        gallery.appendChild(slide);
+        
+        const indicator = document.createElement("div");
+        indicator.className = "gallery-indicator";
+        if (index === 0) indicator.classList.add("active");
+        indicator.addEventListener("click", () => {
+            goToSlide(index);
+        });
+        indicators.appendChild(indicator);
+    });
+}
+
+function updateGallery() {
+    const slides = document.querySelectorAll(".gallery-slide");
+    const indicators = document.querySelectorAll(".gallery-indicator");
+    
+    slides.forEach((slide, index) => {
+        if (index === currentSlideIndex) {
+            slide.classList.add("active");
+        } else {
+            slide.classList.remove("active");
+        }
+    });
+    
+    indicators.forEach((indicator, index) => {
+        if (index === currentSlideIndex) {
+            indicator.classList.add("active");
+        } else {
+            indicator.classList.remove("active");
+        }
+    });
+}
+
+function nextSlide() {
+    currentSlideIndex = (currentSlideIndex + 1) % images.length;
+    updateGallery();
+}
+
+function prevSlide() {
+    currentSlideIndex = (currentSlideIndex - 1 + images.length) % images.length;
+    updateGallery();
+}
+
+function goToSlide(index) {
+    currentSlideIndex = index;
+    updateGallery();
+    resetAutoRotation();
+}
+
+function startAutoRotation() {
+    autoRotateInterval = setInterval(() => {
+        if (isAutoRotating) {
+            nextSlide();
+        }
+    }, rotationSpeed);
+}
+
+function resetAutoRotation() {
+    clearInterval(autoRotateInterval);
+    startAutoRotation();
+}
+
+// Music controls
+function toggleMusic() {
+    isMusicPlaying = !isMusicPlaying;
+    if (isMusicPlaying) {
+        backgroundMusic.play();
+        musicBtn.innerHTML = '<i class="fas fa-volume-up text-2xl"></i>';
+        musicBtn.style.animation = "pulse 2s infinite";
+    } else {
+        backgroundMusic.pause();
+        musicBtn.innerHTML = '<i class="fas fa-volume-mute text-2xl"></i>';
+        musicBtn.style.animation = "none";
+    }
+    musicBtn.style.transform = "scale(0.9)";
+    setTimeout(() => {
+        musicBtn.style.transform = "scale(1)";
+    }, 300);
+}
+
+function toggleVolumeControl() {
+    volumeControl.classList.toggle("show");
+}
+
+function setVolume() {
+    backgroundMusic.volume = volumeSlider.value;
+}
+
+// Confetti effect
+function createConfetti(count = 150) {
+    const colors = ["#ff1493", "#ff69b4", "#ffc0cb", "#ffb6c1", "#ff85a2", "#ff5d8f", "#ff97b7", "#ffacc5", "#ffd6e7", "#fff0f3"];
+    const emojis = ["❤️", "🥰", "✨", "🌸", "💖", "💝", "💘", "💞", "💕", "💓"];
+    
+    for (let i = 0; i < count; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = "-30px";
+        confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.fontSize = 20 * Math.random() + 15 + "px";
+        
+        if (Math.random() > 0.5) {
+            confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        } else {
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = 15 * Math.random() + 8 + "px";
+            confetti.style.height = 15 * Math.random() + 8 + "px";
+            confetti.style.borderRadius = Math.random() > 0.5 ? "50%" : "0";
+        }
+        
+        confetti.style.transform = `rotate(${360 * Math.random()}deg)`;
+        confetti.style.zIndex = "9998";
+        confettiContainer.appendChild(confetti);
+        
+        const duration = 3 * Math.random() + 2;
+        const delay = 2 * Math.random();
+        const keyframes = [
+            { top: "-30px", opacity: 1, transform: `rotate(${360 * Math.random()}deg)` },
+            { top: window.innerHeight + "px", opacity: 0, transform: `rotate(${360 * Math.random()}deg)` }
+        ];
+        const options = {
+            duration: 1000 * duration,
+            delay: 1000 * delay,
+            easing: "cubic-bezier(0.1, 0.8, 0.9, 1)"
+        };
+        
+        confetti.animate(keyframes, options);
+        setTimeout(() => {
+            confetti.remove();
+        }, 1000 * (duration + delay));
+    }
+}
+
+// Emoji rain effect
+function createEmojiRain() {
+    if (isEmojiRaining) return;
+    isEmojiRaining = true;
+    emojiBtn.innerHTML = '<i class="fas fa-spinner fa-spin text-2xl"></i>';
+    
+    const rainContainer = document.createElement("div");
+    rainContainer.className = "emoji-rain";
+    emojiRainContainer.appendChild(rainContainer);
+    
+    const emojis = ["❤️", "🥰", "✨", "🌸", "💖", "💝", "💘", "💞", "💕", "💓"];
+    
+    for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            const emoji = document.createElement("div");
+            emoji.className = "emoji";
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            const left = 100 * Math.random();
+            const duration = 3 * Math.random() + 2;
+            const delay = 5 * Math.random();
+            const size = 20 * Math.random() + 15;
+            
+            emoji.style.left = `${left}%`;
+            emoji.style.animationDuration = `${duration}s`;
+            emoji.style.animationDelay = `${delay}s`;
+            emoji.style.fontSize = `${size}px`;
+            rainContainer.appendChild(emoji);
+            
+            setTimeout(() => {
+                emoji.remove();
+            }, 1000 * duration);
+        }, 200 * i);
+    }
+    
+    setTimeout(() => {
+        rainContainer.remove();
+        isEmojiRaining = false;
+        emojiBtn.innerHTML = '<i class="fas fa-cloud-rain text-2xl"></i>';
+    }, 15000);
+}
+
+// Button animation
+function animateButton(button) {
+    button.style.transform = "scale(0.95)";
+    button.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
+    setTimeout(() => {
+        button.style.transform = "";
+        button.style.boxShadow = "";
+    }, 300);
+}
+
+// Initialize the app
+function init() {
+    createStars();
+    initGallery();
+    
+    // Add click animations to all buttons
+    document.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", function() {
+            animateButton(this);
+            const sound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3");
+            sound.volume = 0.3;
+            sound.play();
+        });
+    });
+    
+    // Show welcome section with animations
+    welcomeSection.style.display = "block";
+    welcomeSection.querySelectorAll("*").forEach((element, index) => {
+        setTimeout(() => {
+            element.classList.add("animate__animated", "animate__fadeInUp");
+        }, 200 * index);
+    });
+}
+
+// Event listeners
+startBtn.addEventListener("click", function() {
+    welcomeSection.style.animation = "fadeOut 0.8s ease";
+    setTimeout(() => {
+        welcomeSection.style.display = "none";
+        giftSection.style.display = "block";
+        giftSection.style.animation = "fadeIn 0.8s ease";
+    }, 800);
+});
+
+giftBox.addEventListener("click", function() {
+    this.classList.add("gift-open");
+    this.style.animation = "rubberBand 1s";
+    new Audio("https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3").play();
+    setTimeout(() => {
+        giftSection.style.animation = "fadeOut 0.8s ease";
+        setTimeout(() => {
+            giftSection.style.display = "none";
+            nameInputSection.style.display = "block";
+            nameInputSection.style.animation = "fadeIn 0.8s ease";
+            userNameInput.focus();
+        }, 800);
+    }, 1000);
+});
+
+submitNameBtn.addEventListener("click", function() {
+    userName = userNameInput.value.trim();
+    if (userName) {
+        const originalHTML = this.innerHTML;
+        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i> 🅲';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            nameInputSection.style.animation = "fadeOut 0.8s ease";
+            setTimeout(() => {
+                nameInputSection.style.display = "none";
+                messageSection.style.display = "block";
+                messageSection.style.animation = "fadeIn 0.8s ease";
+                greeting.textContent = `සුභ උපන් දිනයක්, ${userName}!`;
+                message.textContent = messages[currentMessageIndex];
+                this.innerHTML = originalHTML;
+                this.disabled = false;
+            }, 800);
+        }, 800);
+    } else {
+        userNameInput.style.animation = "shakeX 0.8s";
+        setTimeout(() => {
+            userNameInput.style.animation = "";
+        }, 800);
+    }
+});
+
+nextMessageBtn.addEventListener("click", function() {
+    currentMessageIndex++;
+    if (currentMessageIndex < messages.length) {
+        const originalHTML = this.innerHTML;
+        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i> 🅲';
+        this.disabled = true;
+        
+        setTimeout(() => {
+            message.style.animation = "fadeOut 0.8s ease";
+            setTimeout(() => {
+                message.textContent = messages[currentMessageIndex];
+                message.style.animation = "fadeIn 0.8s ease";
+                
+                // Every even message, create emoji rain
+                if (currentMessageIndex % 2 == 0) {
+                    createEmojiRain();
+                }
+                
+                // Show gallery button on last message
+                if (currentMessageIndex === messages.length - 1) {
+                    showGalleryBtn.classList.remove("hidden");
+                    showGalleryBtn.style.animation = "pulse 2s infinite";
+                }
+                
+                this.innerHTML = originalHTML;
+                this.disabled = false;
+            }, 800);
+        }, 800);
+    }
+});
+
+showGalleryBtn.addEventListener("click", function() {
+    const originalHTML = this.innerHTML;
+    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i> 🅲';
+    this.disabled = true;
+    
+    setTimeout(() => {
+        messageSection.style.animation = "fadeOut 0.8s ease";
+        setTimeout(() => {
+            messageSection.style.display = "none";
+            gallerySection.style.display = "block";
+            gallerySection.style.animation = "fadeIn 0.8s ease";
+            createConfetti();
+            this.innerHTML = originalHTML;
+            this.disabled = false;
+        }, 800);
+    }, 800);
+});
+
+backToMessageBtn.addEventListener("click", function() {
+    gallerySection.style.animation = "fadeOut 0.8s ease";
+    setTimeout(() => {
+        gallerySection.style.display = "none";
+        messageSection.style.display = "block";
+        messageSection.style.animation = "fadeIn 0.8s ease";
+    }, 800);
+});
+
+emojiBtn.addEventListener("click", createEmojiRain);
+musicBtn.addEventListener("click", toggleMusic);
+musicBtn.addEventListener("mouseenter", toggleVolumeControl);
+musicBtn.addEventListener("mouseleave", toggleVolumeControl);
+volumeControl.addEventListener("mouseenter", () => volumeControl.classList.add("show"));
+volumeControl.addEventListener("mouseleave", () => volumeControl.classList.remove("show"));
+volumeSlider.addEventListener("input", setVolume);
+
+// Keyboard navigation for gallery
+document.addEventListener("keydown", function(e) {
+    if (gallerySection.style.display === "block") {
+        if (e.key === "ArrowRight") {
+            nextSlide();
+        } else if (e.key === "ArrowLeft") {
+            prevSlide();
+        }
+    }
+});
+</script>
 </body>
 </html>
