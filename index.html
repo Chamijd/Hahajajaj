@@ -98,10 +98,40 @@
         return;
       }
 
-      status.innerText = "🚀 Deploying... Please wait.";
+      status.innerText = "🚀 Creating app...";
 
       try {
-        const res = await fetch("https://api.heroku.com/app-setups", {
+        // 1. Create app
+        const createApp = await fetch("https://api.heroku.com/apps", {
+          method: "POST",
+          headers: {
+            "Accept": "application/vnd.heroku+json; version=3",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({ name: appName })
+        });
+        const appData = await createApp.json();
+        if (!appData.id) {
+          status.innerText = "❌ Failed creating app: " + (appData.message || "Unknown error");
+          return;
+        }
+
+        // 2. Set config vars
+        status.innerText = "⚙️ Setting config vars...";
+        await fetch(`https://api.heroku.com/apps/${appName}/config-vars`, {
+          method: "PATCH",
+          headers: {
+            "Accept": "application/vnd.heroku+json; version=3",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({ SESSION_ID: sessionId })
+        });
+
+        // 3. Create build
+        status.innerText = "🔨 Deploying build...";
+        const buildRes = await fetch(`https://api.heroku.com/apps/${appName}/builds`, {
           method: "POST",
           headers: {
             "Accept": "application/vnd.heroku+json; version=3",
@@ -109,23 +139,19 @@
             "Authorization": `Bearer ${apiKey}`
           },
           body: JSON.stringify({
-            app: { name: appName },
-            source_blob: { url: repoLink + "/archive/refs/heads/main.zip" },
-            overrides: {
-              env: {
-                SESSION_ID: sessionId
-              }
+            source_blob: {
+              url: repoLink + "/archive/refs/heads/main.zip"
             }
           })
         });
+        const buildData = await buildRes.json();
 
-        const data = await res.json();
-
-        if (data.id) {
-          status.innerHTML = `✅ Deploy successful!<br>App: ${data.app.name}<br><a href="https://${data.app.name}.herokuapp.com" target="_blank">Open App</a>`;
+        if (buildData.id) {
+          status.innerHTML = `✅ Deploy successful!<br>App: ${appName}<br><a href="https://${appName}.herokuapp.com" target="_blank">Open App</a>`;
         } else {
-          status.innerText = "❌ Deploy failed. Check API key and inputs.";
+          status.innerText = "❌ Build failed. Check repo link or app.json.";
         }
+
       } catch (err) {
         console.error(err);
         status.innerText = "❌ Error deploying app.";
