@@ -23,6 +23,17 @@
       text-align: center;
       padding-top: 50px;
     }
+    h1 {
+      background: linear-gradient(45deg, #0f0, #00ffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 28px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #0f0; }
+      to { text-shadow: 0 0 20px #0ff; }
+    }
     input, button {
       padding: 10px;
       font-size: 16px;
@@ -33,11 +44,44 @@
       border-radius: 5px;
       outline: none;
       width: 250px;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #0ff;
+    }
+    button {
+      cursor: pointer;
     }
     button:hover {
       background: #0f0;
       color: #111;
-      cursor: pointer;
+      transform: scale(1.05);
+    }
+    .spinner {
+      border: 4px solid #0f0;
+      border-top: 4px solid transparent;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    #status {
+      margin-top: 10px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      color: #0f0;
+      font-size: 12px;
     }
   </style>
 </head>
@@ -50,8 +94,10 @@
     <input type="text" id="repoLink" placeholder="GitHub Repo Link"><br>
     <input type="text" id="sessionId" placeholder="Bot Session ID"><br>
     <button onclick="deploy()">Deploy Bot</button>
-    <p id="status"></p>
+    <div id="status"></div>
   </div>
+
+  <footer>© 2025 CHAMA Deploy System</footer>
 
   <script>
     // Matrix effect
@@ -94,11 +140,11 @@
       const status = document.getElementById("status");
 
       if (!apiKey || !appName || !repoLink || !sessionId) {
-        status.innerText = "⚠️ Please fill all fields";
+        status.innerHTML = "⚠️ <span style='color:yellow;'>Please fill all fields</span>";
         return;
       }
 
-      status.innerText = "🚀 Creating app...";
+      status.innerHTML = "<div class='spinner'></div> Deploying... Please wait.";
 
       try {
         // 1. Create app
@@ -113,12 +159,12 @@
         });
         const appData = await createApp.json();
         if (!appData.id) {
-          status.innerText = "❌ Failed creating app: " + (appData.message || "Unknown error");
+          status.innerHTML = "❌ <span style='color:red;'>Failed creating app: " + (appData.message || "Unknown error") + "</span>";
           return;
         }
 
         // 2. Set config vars
-        status.innerText = "⚙️ Setting config vars...";
+        status.innerHTML = "<div class='spinner'></div> Setting config vars...";
         await fetch(`https://api.heroku.com/apps/${appName}/config-vars`, {
           method: "PATCH",
           headers: {
@@ -130,7 +176,7 @@
         });
 
         // 3. Create build
-        status.innerText = "🔨 Deploying build...";
+        status.innerHTML = "<div class='spinner'></div> Deploying build...";
         const buildRes = await fetch(`https://api.heroku.com/apps/${appName}/builds`, {
           method: "POST",
           headers: {
@@ -147,14 +193,14 @@
         const buildData = await buildRes.json();
 
         if (buildData.id) {
-          status.innerHTML = `✅ Deploy successful!<br>App: ${appName}<br><a href="https://${appName}.herokuapp.com" target="_blank">Open App</a>`;
+          status.innerHTML = `✅ <span style='color:lime;'>Deploy successful!</span><br>App: <b>${appName}</b><br><a href="https://${appName}.herokuapp.com" target="_blank" style="color:cyan;">Open App</a>`;
         } else {
-          status.innerText = "❌ Build failed. Check repo link or app.json.";
+          status.innerHTML = "❌ <span style='color:red;'>Build failed. Check repo link or app.json.</span>";
         }
 
       } catch (err) {
         console.error(err);
-        status.innerText = "❌ Error deploying app.";
+        status.innerHTML = "❌ <span style='color:red;'>Error deploying app.</span>";
       }
     }
   </script>
