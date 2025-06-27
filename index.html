@@ -32,6 +32,7 @@
       border: 1px solid #0f0;
       border-radius: 5px;
       outline: none;
+      width: 250px;
     }
     button:hover {
       background: #0f0;
@@ -44,8 +45,11 @@
   <canvas id="matrix"></canvas>
   <div class="container">
     <h1>🚀 Heroku Bot Deployer</h1>
-    <input type="text" id="apiKey" placeholder="Enter Heroku API Key"><br>
-    <button onclick="deploy()">Deploy CHAMA-MD Bot</button>
+    <input type="text" id="apiKey" placeholder="Heroku API Key"><br>
+    <input type="text" id="appName" placeholder="App Name"><br>
+    <input type="text" id="repoLink" placeholder="GitHub Repo Link"><br>
+    <input type="text" id="sessionId" placeholder="Bot Session ID"><br>
+    <button onclick="deploy()">Deploy Bot</button>
     <p id="status"></p>
   </div>
 
@@ -83,11 +87,14 @@
 
     // Deploy function
     async function deploy() {
-      const key = document.getElementById("apiKey").value.trim();
+      const apiKey = document.getElementById("apiKey").value.trim();
+      const appName = document.getElementById("appName").value.trim();
+      const repoLink = document.getElementById("repoLink").value.trim();
+      const sessionId = document.getElementById("sessionId").value.trim();
       const status = document.getElementById("status");
 
-      if (!key) {
-        status.innerText = "⚠️ Please enter Heroku API Key";
+      if (!apiKey || !appName || !repoLink || !sessionId) {
+        status.innerText = "⚠️ Please fill all fields";
         return;
       }
 
@@ -99,12 +106,15 @@
           headers: {
             "Accept": "application/vnd.heroku+json; version=3",
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${key}`
+            "Authorization": `Bearer ${apiKey}`
           },
           body: JSON.stringify({
-            "app": { "name": null },
-            "source_blob": {
-              "url": "https://github.com/CHMA2009/-CHAMA-MD/archive/refs/heads/main.zip"
+            app: { name: appName },
+            source_blob: { url: repoLink + "/archive/refs/heads/main.zip" },
+            overrides: {
+              env: {
+                SESSION_ID: sessionId
+              }
             }
           })
         });
@@ -112,9 +122,9 @@
         const data = await res.json();
 
         if (data.id) {
-          status.innerHTML = `✅ Deploy successful!<br>App ID: ${data.app.id}<br><a href="https://dashboard.heroku.com/apps/${data.app.name}" target="_blank">Open App</a>`;
+          status.innerHTML = `✅ Deploy successful!<br>App: ${data.app.name}<br><a href="https://${data.app.name}.herokuapp.com" target="_blank">Open App</a>`;
         } else {
-          status.innerText = "❌ Deploy failed. Check your API key and try again.";
+          status.innerText = "❌ Deploy failed. Check API key and inputs.";
         }
       } catch (err) {
         console.error(err);
